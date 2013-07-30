@@ -2,4 +2,4 @@ from flask.ext.wtf import Form, TextField, SubmitField, validators, ValidationEr
  
 class SearchForm(Form):
   course = TextField("Course", [validators.Required()])
-  submit = SubmitField("Submit")
+  submit = SubmitField("Peep")

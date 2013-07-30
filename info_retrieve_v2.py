@@ -86,7 +86,7 @@ def parseInput(input):
     if input.__len__() != 5:
       return None
 
-    return (1, None, input)
+    return None
 
 
 def getMypurdue(input):
@@ -97,6 +97,12 @@ def getMypurdue(input):
   if input == None:
     #print "err: bad input"
     return None
+
+  # common mistakes 1: people write bio instead of biol
+  print input[1]
+  if input[1] == "BIO":
+    newInput = (input[0], "BIOL", input[2])
+    input = newInput
 
 
   br = mechanize.Browser()
