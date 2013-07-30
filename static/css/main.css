@@ -10,23 +10,33 @@ body {
  */
  
 header {
-  background-color: #2B2B2B;
+  background-color: #ffffff;
   height: 35px;
   width: 100%;
-  opacity: .9;
+  opacity: 1.0;
   margin-bottom: 10px;
 }
 
 header h1.logo {
   margin: 0;
   font-size: 1.7em;
-  color: #fff;
+  color: #B80000;
   text-transform: uppercase;
   float: left;
 }
 
 header h1.logo:hover {
-  color: #fff;
+  color: #000000;
+  text-decoration: none;
+}
+header h1 a {
+  color: #fe5d5d;
+  text-decoration: none;
+}
+
+
+header h1 a:hover {
+  color: #fe2020;
   text-decoration: none;
 }
 
@@ -41,7 +51,22 @@ header h1.logo:hover {
 
 div.jumbo {
   padding: 10px 0 30px 0;
-  background-color: #eeeeee;
+  background-color: #ffffff;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  margin-left: -300px;
+
+  width: 600px;
+}
+
+div.result {
+  padding: 10px 0 30px 0;
+  background-color: #ffffff;
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
           border-radius: 6px;
@@ -52,15 +77,27 @@ h2 {
   margin-top: 40px;
   text-align: center;
   letter-spacing: -2px;
+  color: #fe5d5d;
 }
 
 h3 {
-  font-size: 1.7em;
+  font-size: 3em;
   font-weight: 100;
   margin-top: 30px;
-  text-align: center;
   letter-spacing: -1px;
-  color: #999;
+  color: #fe2020;
+
+  display: inline;
+}
+
+h4 {
+  font-size: 1.8em;
+  font-weight: 100;
+  margin-top: 30px;
+  letter-spacing: -1px;
+  color: #fe2020;
+
+  display: inline;
 }
 
 
@@ -82,7 +119,13 @@ h3 {
 }
 
 .menu li a {
-  color: #999;
+  color: #fe5d5d;
+  text-decoration: none;
+}
+
+
+.menu li a:hover {
+  color: #fe2020;
   text-decoration: none;
 }
 
@@ -95,15 +138,18 @@ form label {
 }
  
 form input#course {
-  width: 400px;
+  width: 200px;
   background-color: #fafafa;
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
           border-radius: 3px;
-  border: 1px solid #cccccc;
+  border: 1px solid #fe0101;
   padding: 5px;
   font-size: 1.1em;
+
+  color: #555555;
 }
+
  
 form textarea#message {
   width: 500px;
@@ -116,6 +162,13 @@ form textarea#message {
   margin-bottom: 10px;
   padding: 5px;
   font-size: 1.1em;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+
 }
  
 form input#submit {
@@ -123,18 +176,20 @@ form input#submit {
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
           border-radius: 3px;
-  border:1px solid #d8d8d8;
+  border:1px solid #de0101;
   padding: 10px;
   font-weight:bold;
   text-align: center;
-  color: #000000;
-  background-color: #f4f4f4;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f4f4f4), color-stop(100%, #e5e5e5));
-  background-image: -webkit-linear-gradient(top, #f4f4f4, #e5e5e5);
-  background-image: -moz-linear-gradient(top, #f4f4f4, #e5e5e5);
-  background-image: -ms-linear-gradient(top, #f4f4f4, #e5e5e5);
-  background-image: -o-linear-gradient(top, #f4f4f4, #e5e5e5);
-  background-image: linear-gradient(top, #f4f4f4, #e5e5e5);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f4f4f4, endColorstr=#e5e5e5);
+  color: #ffffff;
+  background-color: #df0101;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fe2020), color-stop(100%, #fe2020));
+  background-image: -webkit-linear-gradient(top, #fe2020, #fe2020);
+  background-image: -moz-linear-gradient(top, #fe2020, #fe2020);
+  background-image: -ms-linear-gradient(top, #fe2020, #fe2020);
+  background-image: -o-linear-gradient(top, #fe2020, #fe2020);
+  background-image: linear-gradient(top, #fe2020, #fe2020);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#fe2020, endColorstr=#fe2020);
+
+  display: inline;
 }
  
 form input#submit:hover{
@@ -153,8 +208,74 @@ form input#submit:hover{
 .flash {
   background-color: #FBB0B0;
   padding: 10px;
-  width: 400px;
+  width: 200px;
+
+  color: 555555;
+  display: inline;
 }
 
+
+img.floatleft{
+  float:left;
+  margin:6px 6px 6px 0px;
+} 
+
+
+/* Talbe */
+#hor-minimalist-b
+
+{
+
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+
+	font-size: 12px;
+
+	background: #fff;
+
+	margin: auto;
+
+	width: 480px;
+
+        border-collapse: collapse;
+
+	text-align: left;
+
+}
+
+#hor-minimalist-b th
+
+{
+
+	font-size: 14px;
+
+	font-weight: normal;
+
+	color: #df1010;
+
+	padding: 10px 8px;
+
+	border-bottom: 2px solid #df1010;
+
+}
+
+#hor-minimalist-b td
+
+{
+
+	border-bottom: 1px solid #fe5d5d;
+
+	color: #fe5d5d;
+
+	padding: 6px 8px;
+
+}
+
+#hor-minimalist-b tbody tr:hover td
+
+{
+
+	color: #fe1010;
+
+}
 
 

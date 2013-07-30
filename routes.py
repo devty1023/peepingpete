@@ -1,26 +1,45 @@
 from flask import Flask, render_template, request, flash
 from forms import SearchForm
-import info_retrieve
+import info_retrieve_v2
 
 app = Flask(__name__)
 app.secret_key = 'kicsdevty1023'
 
+
+@app.route('/test', methods=['GET', 'POST'])
+def results():
+  form = SearchForm()
+  if request.method == 'POST':
+    if form.validate() == False:
+      flash('All fields are required.')
+      return render_template('results.html', form=form)
+    else:  # form validated
+      ret = info_retrieve_v2.getCourse(form.course.data)
+      if(ret == None): # bad input
+        flash('No result :(')
+	return render_template('results.html', form=form)
+      else: # success
+	table = ret
+	return render_template('results.html', form=form, table=table, success=True)
+
+  elif request.method == 'GET':
+    return render_template('home.html', form=form);
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
   form = SearchForm()
-
   if request.method == 'POST':
     if form.validate() == False:
       flash('All fields are required.')
       return render_template('home.html', form=form)
     else:  # form validated
-      ret = info_retrieve.getCourse(form.course.data)
+      ret = info_retrieve_v2.getCourse(form.course.data)
       if(ret == None): # bad input
-        flash('Bad Course Name! (or other bad issues)')
+        flash('No result :(')
 	return render_template('home.html', form=form)
-      else:
-	flash(ret)
-	return render_template('home.html', form=form)
+      else: # success
+	table = ret
+	return render_template('results.html', form=form, table=table, success=True)
 
   elif request.method == 'GET':
     return render_template('home.html', form=form);

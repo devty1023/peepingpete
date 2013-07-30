@@ -1,13 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-  <div class="jumbo">
-    <img class="floatleft" src="{{url_for('static', filename='img/peepingpete.png')}}" width="50%" height="50%">
-    </br>
-    </br>
-    </br>
-    <h3>Simplify</h3><h4> your hunt for the prefect schedule</h4>
-
-    <form action="{{ url_for('home') }}" method=post>
+  <div class="result">
+    <form action="{{ url_for('results') }}" method=post>
       {{ form.hidden_tag() }}
       {{ form.course }}
       {{ form.submit }}
@@ -18,12 +12,12 @@
     {% endfor %}
 
     {% if success %}
-    <table border="1">
+    <table id="hor-minimalist-b">
       <tr>
-        <td>Course</td>
-        <td>Time</td>
-        <td>Type</td>
-        <td>Available Seats</td>
+        <th>Course</th>
+        <th>Time</th>
+        <th>Type</th>
+        <th>Available Seats</th>
       </tr>
 
       {% for entry in table %}
