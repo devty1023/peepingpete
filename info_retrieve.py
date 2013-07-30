@@ -55,10 +55,16 @@ def getMypurdue(input):
   accepst input returned by parseInput
   """
   if input == None:
+<<<<<<< HEAD
     #print "err: bad input"
     return None
 
 
+=======
+    print "err: bad input"
+    return None
+
+>>>>>>> a21a10adc91ca2db5da0ec14b8c4623d04365874
   br = mechanize.Browser()
   # set some headers
   br.set_handle_robots(False)
@@ -86,8 +92,13 @@ def getMypurdue(input):
         control.value = input[2]
 
   except:
+<<<<<<< HEAD
      #print "bad input"
      return None
+=======
+     print "bad input"
+     return []
+>>>>>>> a21a10adc91ca2db5da0ec14b8c4623d04365874
 
 
   br.submit()
@@ -103,7 +114,11 @@ def getMypurdue(input):
       #br.back()
 
   if not links:
+<<<<<<< HEAD
     #print "course not found"
+=======
+    print "course not found"
+>>>>>>> a21a10adc91ca2db5da0ec14b8c4623d04365874
     return None
 
   # visit links and get seats/waitlist seats
@@ -131,6 +146,7 @@ def getMypurdue(input):
 
   return vals_clean
 
+<<<<<<< HEAD
 def getCourse(arg):
   print 'getCourse called ' + arg
   ret = getMypurdue(parseInput(arg))
@@ -148,4 +164,26 @@ def getCourse(arg):
 
 if __name__ == '__main__':
   getCourse(sys.argv[1:])
+=======
+def main(argv):
+  ret = []
+  for arg in argv:
+    ret.append(getMypurdue(parseInput(arg)))
+
+  if ret[0] == None: # getMypurdue couldn't find the course
+    return 
+
+  try:
+    for course in ret:
+      for section in course:
+	print section[0] + ": " + str(section[1])
+  except:
+    print sys.exc_info()[0]
+
+    return 
+
+
+if __name__ == '__main__':
+  main(sys.argv[1:])
+>>>>>>> a21a10adc91ca2db5da0ec14b8c4623d04365874
 
