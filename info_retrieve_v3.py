@@ -1,9 +1,39 @@
 #!/usr/bin/python
 
 import mechanize
+import threading
 import sys
-import time
+import copy
 from HTMLParser import HTMLParser
+
+val_all = []
+class linkThread(threading.Thread):
+  def __init__(self, index, br, link):
+    threading.Thread.__init__(self)
+    self.index = index
+    self.br = br
+    self.link = link
+
+  def run(self):
+    self.br.follow_link(self.link)
+    html = self.br.response().read()
+
+    #print "thread " + str(self.index) + " launched.."
+    global val_all
+    val_current = []
+    val_current = getAttr(html)  # GET ALL SEAT INFORMATION
+
+    # LETS CLEAN COURSE NAME HERE
+    course_raw = self.link.text
+    course_split = course_raw.split(" -");
+    course_title = course_split[0]
+    course_num = course_split[2]
+    course_section = course_split[3]
+    course = course_num + ": " + course_title + " (section: " + course_section + ")"
+    val_current.append(course)
+    val_all[self.index]= val_current
+
+    
 
 class MLStripper(HTMLParser):
     def __init__(self):
@@ -157,23 +187,22 @@ def getMypurdue(input):
     return None
 
   # visit links and get seats/waitlist seats
-  val_all = []
+  global val_all
+  val_all_len = len(links)
+  val_all = [None] * val_all_len
+
+  # initialize list of threads
+  threads = [None] * val_all_len
+  i = 0
   for link in links:
-    br.follow_link(link)
-    html = br.response().read()
-    val_current = getAttr(html)  # GET ALL SEAT INFORMATION
-    
-    # LETS CLEAN COURSE NAME HERE
-    course_raw = link.text
-    course_split = course_raw.split(" -");
-    course_title = course_split[0]
-    course_num = course_split[2]
-    course_section = course_split[3]
-    course = course_num + ": " + course_title + " (section: " + course_section + ")"
-    val_current.append(course)
-    val_all.append(val_current)
-    br.back()
+    threads[i] = linkThread( i, copy.copy(br), link  )
+    threads[i].start()
+    i += 1
   
+  # wait for all threads to complete
+  for thread in threads:
+    thread.join()
+
   #print val_all
   # clean up lists (parse out avaialbe seats
   vals_clean = []
@@ -184,7 +213,7 @@ def getMypurdue(input):
     vals_clean.append(tmp)
 
   #print vals_clean
-  print len(vals_clean)
+  #print len(vals_clean)
 
   ret_fin = []
   ret_temp = []
