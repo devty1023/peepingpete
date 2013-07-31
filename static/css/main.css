@@ -73,6 +73,7 @@ div.result {
 }
 
 h2 {
+
   font-size: 3em;
   margin-top: 40px;
   text-align: center;
@@ -81,7 +82,9 @@ h2 {
 }
 
 h3 {
-  font-size: 3em;
+
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  font-size: 2.5em;
   font-weight: 100;
   margin-top: 30px;
   letter-spacing: -1px;
@@ -91,7 +94,9 @@ h3 {
 }
 
 h4 {
-  font-size: 1.8em;
+
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  font-size: 1.5em;
   font-weight: 100;
   margin-top: 30px;
   letter-spacing: -1px;
@@ -101,6 +106,7 @@ h4 {
 }
 
 h5 {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
   font-size: 1.0em;
   font-weight: 100;
   margin-top: 30px;
