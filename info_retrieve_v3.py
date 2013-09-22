@@ -3,6 +3,7 @@
 import mechanize
 import threading
 import sys
+import time
 import copy
 from HTMLParser import HTMLParser
 

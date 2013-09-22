@@ -8,10 +8,8 @@ def parseInput(input):
   Returns a tuple of type (input_type, course dep/None, courser num/crn)  
   given a user unput, parseInput does it's best to understand what is going on
 
-  It broadly accepst two types of input
-  1: CRN
   Simple string of numbers
-  2: Course Number
+  : Course Number
   e.g. cs252
   Spaces and capitalizations are okay as an input
 
@@ -55,16 +53,12 @@ def getMypurdue(input):
   accepst input returned by parseInput
   """
   if input == None:
-<<<<<<< HEAD
     #print "err: bad input"
     return None
 
-
-=======
     print "err: bad input"
     return None
 
->>>>>>> a21a10adc91ca2db5da0ec14b8c4623d04365874
   br = mechanize.Browser()
   # set some headers
   br.set_handle_robots(False)
@@ -146,7 +140,6 @@ def getMypurdue(input):
 
   return vals_clean
 
-<<<<<<< HEAD
 def getCourse(arg):
   print 'getCourse called ' + arg
   ret = getMypurdue(parseInput(arg))
@@ -164,26 +157,3 @@ def getCourse(arg):
 
 if __name__ == '__main__':
   getCourse(sys.argv[1:])
-=======
-def main(argv):
-  ret = []
-  for arg in argv:
-    ret.append(getMypurdue(parseInput(arg)))
-
-  if ret[0] == None: # getMypurdue couldn't find the course
-    return 
-
-  try:
-    for course in ret:
-      for section in course:
-	print section[0] + ": " + str(section[1])
-  except:
-    print sys.exc_info()[0]
-
-    return 
-
-
-if __name__ == '__main__':
-  main(sys.argv[1:])
->>>>>>> a21a10adc91ca2db5da0ec14b8c4623d04365874
-
