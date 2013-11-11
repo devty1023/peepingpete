@@ -146,7 +146,7 @@ def getMypurdue(input):
 
   # select form
   br.form = list( br.forms() )[0]
-  br['p_term'] = ['201410'] # 201410 = fall 2013
+  br['p_term'] = ['201420'] # 201420 = spring 2014
 
   # submit the form
   br.submit()			
