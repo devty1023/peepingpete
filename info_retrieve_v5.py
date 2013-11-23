@@ -9,11 +9,9 @@ from HTMLParser import HTMLParser
 
 
 """
-info_retrieve_v4 is a major upgrade from the previous version
-It can handle classes with multipl rooms and sessions and returns a 
-beautiful jason object of the following structure:
-
-    # ret_all= {
+info_retrieve_v5 is a minor upgrade from the previous version
+and is sutable for a webapp
+    # ret_all= [
     #     letcutre: {
     #         'section num': {
     #             'days': MTWRF
@@ -41,7 +39,7 @@ beautiful jason object of the following structure:
     #         }
     #         ...
     #     }
-    #}
+    #]
 
 
 """
@@ -286,7 +284,7 @@ def crawlPurdue(input):
 
     # merge section dic with seat_all into ret_all
     # ret_all has the following structure
-    # ret_all= {
+    # ret_all= [
     #     letcutre: {
     #         'section num': {
     #             'days': MTWRF
@@ -315,76 +313,77 @@ def crawlPurdue(input):
     #         ...
     #     }
     #}
-    ret_all = { 'Clinic':{}, 'Distance Learning':{}, 'Experiential':{}, 
-		'Individual Study':{}, 'Laboratory':{}, 'Laboratory Preparation':{}, 
-		'Lecture':{}, 'Practice Study Observation':{}, 'Presentation':{},
-		'Recitation':{},  'Research':{}, 'Studio':{} }
+    ret_all = [ {}, {}, {}, 
+		{}, {}, {}, 
+		{}, {}, {},
+		{}, {}, {} ]
 
 
     # add all entries to ret_all
     for i in range(0, len( seat_all )):
         if ( section_all[i]['stype'][0] == 'Clinic' ):
-            ret_all['Clinic'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[0][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
 						  'seat': seat_all[i][1]}
         elif ( section_all[i]['stype'][0] == 'Distance Learning' ):
-            ret_all['Distance Learning'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[1][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
 						  'seat': seat_all[i][1]}
 
         elif ( section_all[i]['stype'][0] == 'Experiential' ):
-            ret_all['Experiential'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[2][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
 						  'seat': seat_all[i][1]}
 
         elif ( section_all[i]['stype'][0] == 'Individual Study' ):
-            ret_all['Individual Study'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[3][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
 						  'seat': seat_all[i][1]}
         elif ( section_all[i]['stype'][0] == 'Laboratory' ):
-            ret_all['Laboratory'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[4][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
 						  'seat': seat_all[i][1]}
         elif ( section_all[i]['stype'][0] == 'Laboratory Preparation' ):
-            ret_all['Laboratory Preparation'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[5][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
 						  'seat': seat_all[i][1]}
         elif ( section_all[i]['stype'][0] == 'Lecture' ):
-            ret_all['Lecture'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[6][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
 						  'seat': seat_all[i][1]}
         elif ( section_all[i]['stype'][0] == 'Practice Study Observation' ):
-            ret_all['Practice Study Observation'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[7][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
 						  'seat': seat_all[i][1]}
         elif ( section_all[i]['stype'][0] == 'Presentation' ):
-            ret_all['Presentation'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[8][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
 						  'seat': seat_all[i][1]}
         elif ( section_all[i]['stype'][0] == 'Recitation' ):
-            ret_all['Recitation'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[9][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
 						  'seat': seat_all[i][1]}
         elif ( section_all[i]['stype'][0] == 'Research' ):
-            ret_all['Research'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[10][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
 						  'seat': seat_all[i][1]}
         elif ( section_all[i]['stype'][0] == 'Studio' ):
-            ret_all['Studio'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all[11][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],
 						  'seat': seat_all[i][1]}
+
 
     return ret_all
 

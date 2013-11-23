@@ -12,21 +12,48 @@
     {% endfor %}
 
     {% if success %}
+    <h3>Peeped Result for {{ course }} </h3>
+
     <table id="hor-minimalist-b">
       <tr>
-        <th>Course</th>
-        <th>Time</th>
+        <th>Section Number</th>
         <th>Type</th>
+        <th>Time</th>
+	<th>Days</th>
+	<th>Instructors</th>
+        <th>Available Seats</th>
+      </tr>
+      {% for sections in table %}
+	{% if sections | length !=0  %}
+	  <h4> {{ sections }}</h4>
+	  {% for item in sections %}
+            <h5> {{ item }} </h5> </br>
+            <h5> {{ item.inst }} </h5> </br>
+	  {% endfor %}
+	{% endif %}
+      {% endfor %}
+    </table>
+
+    <table id="hor-minimalist-b">
+      {% for entry in table %}
+      <h4> {{ entry }} </h4>
+      <tr>
+        <th>Section Number</th>
+        <th>Time</th>
+	<th>Days</th>
+	<th>Instructors</th>
         <th>Available Seats</th>
       </tr>
 
-      {% for entry in table %}
+      {% for section in entry %}
       <tr>
-        <td>{{ entry[0]}}</td>
-        <td>{{ entry[1]}}</td>
-        <td>{{ entry[2]}}</td>
-        <td>{{ entry[3]}}</td>
+        <td>{{ section.section_num}}</td>
+        <td>{{ section.time}}</td>
+        <td>{{ section.days}}</td>
+        <td>{{ section.instructor}}</td>
+        <td>{{ section.seata}}</td>
       </tr>
+      {% endfor %}
       {% endfor %}
 
     </table>
