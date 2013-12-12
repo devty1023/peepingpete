@@ -15,8 +15,9 @@ beautiful jason object of the following structure:
 
     # ret_all= {
     #     letcutre: {
-    #         'crn num': {
+    #         'crn': {
     #             'days': MTWRF
+    #             'sec': LE01
     #             'instructor': 'devty'
     #             'time': '25th hour'
     #             'seata': '-1'
@@ -24,7 +25,7 @@ beautiful jason object of the following structure:
     #         ...
     #     }
     #     laboratory: {
-    #         'crn num': {
+    #         'crn': {
     #             'days': MTWRF
     #             'instructor': 'devty'
     #             'time': '25th hour'
@@ -33,7 +34,7 @@ beautiful jason object of the following structure:
     #         ...
     #     }
     #     PSO: {
-    #         'crn num': {
+    #         'crn': {
     #             'days': MTWRF
     #             'instructor': 'devty'
     #             'time': '25th hour'
@@ -125,6 +126,8 @@ def getSeats(html):
  
 
 
+# Link Thread returns the following thread
+# [ <course section>, <course crn> , <seat>, <course name> ]
 class linkThread(threading.Thread):
   def __init__(self, index, br, link):
       threading.Thread.__init__(self)
@@ -147,10 +150,18 @@ class linkThread(threading.Thread):
       course_section = course_section[1:len(course_section)]
       seat_current.append(course_section)
 
+      # get crn
+      course_crn = course_split[1];
+      seat_current.append(course_crn)
+
       # get seat info here
       seat_current.append(getSeats(html))
-      seat_all[self.index] = seat_current
 
+      # get course name
+      seat_current.append( course_split[0] )
+
+      # commit
+      seat_all[self.index] = seat_current
       html = self.br.response().read()
 
 def normalizeInput(input):
@@ -248,7 +259,7 @@ def crawlPurdue(input):
   
     # We are now in Course Schedule Listing Page
     html = br.response().read() 
-    section_all = getAttr(html);
+    section_all = getAttr(html)
    
     #print attr_all
     # now we need to find the link to the course
@@ -270,6 +281,8 @@ def crawlPurdue(input):
     seat_all = [None] * seat_all_len
   
     # initialize list of threads
+
+    # NOT PYTHONIC LOLOLOLOL
     threads = [None] * seat_all_len
     i = 0
     for link in links:
@@ -288,8 +301,8 @@ def crawlPurdue(input):
     # ret_all has the following structure
     # ret_all= {
     #     letcutre: {
-    #         'section num': {
-    #             'days': MTWRF
+    #         'crn': {
+    #             'days': [M,T,W,R,F]
     #             'instructor': 'devty'
     #             'time': '25th hour'
     #             'seata': '-1'
@@ -297,7 +310,7 @@ def crawlPurdue(input):
     #         ...
     #     }
     #     laboratory: {
-    #         'section num': {
+    #         'crn': {
     #             'days': MTWRF
     #             'instructor': 'devty'
     #             'time': '25th hour'
@@ -306,7 +319,7 @@ def crawlPurdue(input):
     #         ...
     #     }
     #     PSO: {
-    #         'section num': {
+    #         'crn': {
     #             'days': MTWRF
     #             'instructor': 'devty'
     #             'time': '25th hour'
@@ -315,7 +328,7 @@ def crawlPurdue(input):
     #         ...
     #     }
     #}
-    ret_all = { 'Clinic':{}, 'Distance Learning':{}, 'Experiential':{}, 
+    ret_all = { 'Course': input[0] + input[1] + " " + seat_all[0][3], 'Clinic':{}, 'Distance Learning':{}, 'Experiential':{}, 
 		'Individual Study':{}, 'Laboratory':{}, 'Laboratory Preparation':{}, 
 		'Lecture':{}, 'Practice Study Observation':{}, 'Presentation':{},
 		'Recitation':{},  'Research':{}, 'Studio':{} }
@@ -324,67 +337,90 @@ def crawlPurdue(input):
     # add all entries to ret_all
     for i in range(0, len( seat_all )):
         if ( section_all[i]['stype'][0] == 'Clinic' ):
-            ret_all['Clinic'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Clinic'][seat_all[i][1]] = { 'time': section_all[i]['time'], 
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
         elif ( section_all[i]['stype'][0] == 'Distance Learning' ):
-            ret_all['Distance Learning'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Distance Learning'][seat_all[i][1]] = { 'time': section_all[i]['time'] , 
+
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
 
         elif ( section_all[i]['stype'][0] == 'Experiential' ):
-            ret_all['Experiential'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Experiential'][seat_all[i][1]] = { 'time': section_all[i]['time'] , 
+
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
 
         elif ( section_all[i]['stype'][0] == 'Individual Study' ):
-            ret_all['Individual Study'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Individual Study'][seat_all[i][1]] = { 'time': section_all[i]['time'] , 
+
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
         elif ( section_all[i]['stype'][0] == 'Laboratory' ):
-            ret_all['Laboratory'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Laboratory'][seat_all[i][1]] = { 'time': section_all[i]['time'] , 
+
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
         elif ( section_all[i]['stype'][0] == 'Laboratory Preparation' ):
-            ret_all['Laboratory Preparation'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Laboratory Preparation'][seat_all[i][1]] = { 'time': section_all[i]['time'] , 
+
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
         elif ( section_all[i]['stype'][0] == 'Lecture' ):
-            ret_all['Lecture'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Lecture'][seat_all[i][1]] = { 'time': section_all[i]['time'] , 
+
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
         elif ( section_all[i]['stype'][0] == 'Practice Study Observation' ):
-            ret_all['Practice Study Observation'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Practice Study Observation'][seat_all[i][1]] = { 'time': section_all[i]['time'] , 
+
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
         elif ( section_all[i]['stype'][0] == 'Presentation' ):
-            ret_all['Presentation'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Presentation'][seat_all[i][1]] = { 'time': section_all[i]['time'] , 
+
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
         elif ( section_all[i]['stype'][0] == 'Recitation' ):
-            ret_all['Recitation'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Recitation'][seat_all[i][1]] = { 'time': section_all[i]['time'] , 
+
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
         elif ( section_all[i]['stype'][0] == 'Research' ):
-            ret_all['Research'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Research'][seat_all[i][1]] = { 'time': section_all[i]['time'] , 
+
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],  
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
         elif ( section_all[i]['stype'][0] == 'Studio' ):
-            ret_all['Studio'][seat_all[i][0]] = { 'time': section_all[i]['time'] , 
+            ret_all['Studio'][seat_all[i][1]] = { 'time': section_all[i]['time'] , 
+
+						  'sec': seat_all[i][0],
 						  'inst': section_all[i]['inst'], 
 						  'days': section_all[i]['days'],
-						  'seat': seat_all[i][1]}
+						  'seat': seat_all[i][2]}
 
     return ret_all
 
@@ -412,3 +448,4 @@ if __name__ == '__main__':
    getCourse(sys.argv[1])
    print "global: " + str(time.clock() - start)
   
+
